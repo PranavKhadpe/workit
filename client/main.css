@@ -1,0 +1,54 @@
+body {
+  padding: 10px;
+  font-family: 'Helvetica Neue';
+}
+
+.participants{
+  line-height: 0.5;
+  background: #d8dcd6;
+  border-radius: 5px;
+  margin-top:10px;
+  padding: 20px;
+}
+
+#chatwidget{
+  margin-top:10px;
+  border: solid black 2px;
+  border-radius: 5px;
+  padding-top:10px;
+}
+
+.theirmessage{
+  padding: 1rem;
+  line-height: 0.5;
+  background: #d8dcd6;
+  border-radius:5px;
+}
+
+.windowsize{
+  height: 500px;
+  overflow: auto;
+}
+
+.yourmessage{
+  padding: 1rem;
+  line-height: 0.5;
+  background: #b1d1fc;
+  border-radius:5px;
+}
+
+#pickingpanel{
+  margin:5px;
+  margin-top:10px;
+  padding:0;
+  border-radius: 5px;
+  background: #d8dcd6;
+}
+
+#displaypanel{
+  margin:5px;
+  margin-top:10px;
+  padding:0;
+  border-radius: 5px;
+  background: #d8dcd6;
+}
