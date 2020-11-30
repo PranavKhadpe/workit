@@ -103,7 +103,8 @@ table
 }
 .gifpicker
 {
-	margin: 10px auto;
+    margin: 0 auto;
+
 	position: relative;
 	width: 100%;
 }

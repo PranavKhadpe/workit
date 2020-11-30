@@ -1,6 +1,10 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 import GifPicker from 'gifpicker';
 import './app.css';
+
+import './main.js';
 
 class App extends React.Component {
   static propTypes = {};
@@ -16,7 +20,8 @@ class App extends React.Component {
           apikey="JRRPJW2OJT6Q"
           onSelect={gifUrl => {
             console.log(gifUrl);
-            console.log(this.gifRef.current);
+            Template.picking.__helpers.get('test').call(gifUrl);
+            // console.log(this.gifRef.current);
           }}
         />
       </>

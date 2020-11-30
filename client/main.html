@@ -4,8 +4,8 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/4296149fe0.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./main.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
   <title>chat-interface</title>
 </head>
 
@@ -16,18 +16,32 @@
   </nav>
   {{#if currentUser}}
     <div class="row">
-      <div id="left-panel" class="col-md-2">
+      <div class="col-md-8">
+        <div class="row" style="margin-left:0px;">
+          {{> task}}
+        </div>
+        <div class="row">
+            <div id="left-panel" class="col-md-3">
+                {{> participantlist}}
+                {{> timepanel}}
+              </div>
+              <div id="chatwidget" class="col-md-9">
+                {{> chat}}
+              </div>
+        </div>
+      </div>
+      <!-- <div id="left-panel" class="col-md-2">
         {{> participantlist}}
         {{> timepanel}}
       </div>
       <div id="chatwidget" class="col-md-6">
         {{> chat}}
-      </div>
+      </div> -->
       <div class="col-md-4">
-        <div id="pickingpanel">
+        <div id="pickingpanel" style="height: 430px;">
           {{> picking}}
         </div>
-        <div id="displaypanel" class="row">
+        <div id="displaypanel">
           {{> displaying}}
         </div>
       </div>
@@ -35,6 +49,10 @@
   {{else}}
     <p>Please Login/Register</p>
   {{/if}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 <template name="chat">
@@ -71,7 +89,7 @@
     <div class="input-group mb-3">
       <input type="text" class="form-control" name="text" placeholder="Type a message" aria-label="message" aria-describedby="button-addon2">
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="submit" value="Send" id="button-addon2">Send</button>
+        <button class="btn btn-outline-secondary" type="submit" value="Send" id="button-addon2">Send <i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
   </form>
@@ -79,7 +97,11 @@
 
 <template name="participantlist">
   <div class="participants">
-    <p>Participants:</p>
+    <p><i class="fas fa-users"></i> <strong>{{num}} Participants</strong></p>
+    {{#if notthree}}
+      <p>(Waiting for {{more}} more)</p>
+    {{else}}
+    {{/if}}
     <hr>
     {{#each users}}
       <p>{{username}}</p>
@@ -94,12 +116,127 @@
 </template>
 
 <template name="picking">
-  <p>Here we pick</p>
-  <hr>
-  <div>{{> React component=App onClick=onClick}}</div>
-  {{initialise}}
+  <form id="gifselection">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-9" style="border: solid black 1px; border-radius:5px; padding:0; margin-top:10px;margin-left: 20px;">
+          <div class="row">
+            <div class="col-md-3" style="padding-right:0;">
+                <button type="button" class="btn btn-dark btn-sm" style="width:100%; height:30px; border-bottom-right-radius: 0; border-top-right-radius:0;" disabled>Assign to</button>
+            </div>
+            <div class="col-md-9" style="padding: 0;">
+              <select class="form-control form-control-small btn-mini" id="exampleFormControlSelect1" name="username" style="font-size: 0.8rem; height: 30px; width:94.5%;border-bottom-left-radius: 0; border-top-left-radius:0; border:0;">
+              
+                {{#each users}}
+                  <option>{{username}}</option>
+                {{else}}
+                  <option>No Users</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col md-3">
+          <button type="submit" id="gifsend" class="btn btn-dark btn-sm" style="height: 30px; margin-top: 10px; display:none;">Send<i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+    <div>{{> React component=App onClick=onClick}}</div>
+    {{initialise}}
+    <input type="text" name="link" id="giflink" style="display:none">
+  </form>
 </template>
 
 <template name="displaying">
-    <p>Here we display</p>
-  </template>
+  <div class="testimonial-group">
+    <div class="row justify-content-between">
+      <div class="col-md-3 d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary btn-sm" id="left-button"><i class="fas fa-chevron-circle-left"></i></button>
+          <!-- <a href="#" id="left-button">Left</a> -->
+      </div>
+      <div class="col-md-3 d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary btn-sm" id="right-button"><i class="fas fa-chevron-circle-right"></i></button>
+          <!-- <a href="#" id="right-button">Right</a> -->
+      </div>
+    </div>
+    <div class="row text-center" id="animaterow" style="margin-left: 0; margin-right:0;">
+    {{#if gifcollection currentUser.username}}
+      {{#each gifcollection currentUser.username}}
+        <div class="col-md-6" style="padding: 0;">
+          <div class="card" style="height:16rem;">
+            <img src={{link}} class="card-img-top" style="margin-top: 0px; width: 100%; height:10rem; object-fit: scale-down;" alt="...">
+            <div class="card-body" style="padding: 0.8rem;">
+              <p class="card-title">{{getUsername assignedBy}}</p>
+              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+              <a href="#" class="btn btn-info btn-sm"><i class="fas fa-arrow-alt-circle-up"></i> Upvote</a>
+              <a href="#" class="btn btn-dark btn-sm">Downvote</a>
+            </div>
+          </div>
+        </div>
+      {{else}}
+        <p>No Gif yet</p>
+      {{/each}}
+    {{else}}
+    <p>No Gifs yet</p>
+    {{/if}}
+    </div>
+  </div>
+  <script>
+      const buttonRight = document.getElementById('right-button');
+      const buttonLeft = document.getElementById('left-button');
+
+      buttonRight.onclick = function () {
+      document.getElementById('animaterow').scrollLeft += 200;
+      };
+      buttonLeft.onclick = function () {
+      document.getElementById('animaterow').scrollLeft -= 200;
+      };
+      // $('#right-button').click(function() {
+      //    event.preventDefault();
+      //    console.log("move right");
+      //    $('#animaterow').animate({
+      //      marginLeft: "-=200px"
+      //    }, "fast");
+      // });
+      // $('#left-button').click(function() {
+      //    event.preventDefault();
+      //    console.log("move right");
+      //    $('#animaterow').animate({
+      //      marginLeft: "+=200px"
+      //    }, "fast");
+      // });
+   </script>
+</template>
+
+<template name="task">
+    <div class="btn-group" style="margin-top:10px; width:100%">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <i class="fa fa-info-circle" aria-hidden="true"></i><span> Task Description</span>
+        </button>
+        <div class="dropdown-menu p-4" style="border:0; width:100%; color: white; background: #6C747B;">
+            <p>As part of this activity, you will collaborate as a team to decide how to allocate funds for different projects as described below. Once all your teammates have arrived, you will be allowed to send messages through the chat. Your group will have <strong>20</strong> minutes to deliberate after which the chat will be disabled. The chat will give you a prompt 60 seconds before the end.</p>
+        <p>You must evaluate competing requests for funding and make judgements about their relative merit. Many
+                programs have merit, but limited resources require that you select the programs that you prefer to fund. You
+                have discretionary funds available, and a number of projects are requesting access to these funds. Your job
+                is to select those that should receive support. Your goal in selecting projects for funding is to choose those
+                programs that agree with your personal values.
+                Begin when you are ready</p>
+                <div style="padding: 5px; border: solid 2px white; border-radius:5px;">
+                    <p>Personal Trust Foundation: $500,000</p>
+                    <p>You have $500,000 to allocate from this fund. Proposals received from various organizations for projects are
+                            listed below. Each project is in need of $500,000 but can benefit from any contribution that you might make.
+                            The greater the contribution that you make to a particular project, the more likely it is that the chosen project
+                            will succeed.</p>
+                    <p>Proposed Projects:</p>
+                    <ol style="font-weight: bold">
+                            <li>To establish a community arts program featuring art, music, and dance
+                                    programs for children and adults.</li>
+                            <li>To establish an additional shelter for the homeless in the state</li>
+                            <li>To purchase art for display in the state's art gallery</li>
+                            
+                        </ol>
+                    <p>Discuss with your team on how the money should be distributed across projects. After the deliberation ends, click the button on the right and you will be prompted to enter your final decision. <strong>Click the DONE button under the chat once you have reached a conclusion or after the time expires. it will open up a form where you can enter the final decision individually</strong></p>
+                    </div>
+          </div>
+      </div>
+</template>

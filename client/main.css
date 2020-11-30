@@ -1,10 +1,15 @@
+html {
+  overflow-y: scroll; 
+}
+
+
 body {
   padding: 10px;
   font-family: 'Helvetica Neue';
 }
 
 .participants{
-  line-height: 0.5;
+  line-height: 1.5rem;
   background: #d8dcd6;
   border-radius: 5px;
   margin-top:10px;
@@ -12,6 +17,7 @@ body {
 }
 
 #chatwidget{
+  height: 620px;;
   margin-top:10px;
   border: solid black 2px;
   border-radius: 5px;
@@ -26,7 +32,7 @@ body {
 }
 
 .windowsize{
-  height: 500px;
+  height: 550px;
   overflow: auto;
 }
 
@@ -52,3 +58,48 @@ body {
   border-radius: 5px;
   background: #d8dcd6;
 }
+
+.fa-arrow-alt-circle-up:before{
+  font-family: 'Font Awesome 5 Free';
+}
+
+.fa-paper-plane:before{
+  font-family: 'Font Awesome 5 Free';
+}
+
+.fa-users:before{
+  font-family: 'Font Awesome 5 Free';
+  font-size: 1rem;
+}
+
+.gifpicker__chosengif img{
+  width: 100%;
+  height: 20rem;
+  object-fit: scale-down; 
+}
+
+.fa-info-circle::before{
+  font-family: 'Font Awesome 5 Free';
+}
+
+#login-name-link{
+  color: white;
+}
+
+.testimonial-group > .row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.testimonial-group > .row > .card {
+  flex: 0 0 auto;
+}
+
+.fa-chevron-circle-left::before{
+  font-family: 'Font Awesome 5 Free';
+}
+
+.fa-chevron-circle-right::before{
+  font-family: 'Font Awesome 5 Free';
+}
+
