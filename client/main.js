@@ -16,13 +16,18 @@ Template.participantlist.helpers({
     return Meteor.users.find();
   },
   num(){
-    return Meteor.users.find().count();
+    return Meteor.users.find().count()-1;
   },
   more(){
-    return (3-Meteor.users.find().count());
+    return (4-Meteor.users.find().count());
+  },
+  checkAdmin(username){
+      if(username == 'admin'){
+          return true;
+      }
   },
   notthree(){
-    if (Meteor.users.find().count() < 3){
+    if (Meteor.users.find().count() < 4){
       return true;
     }
     else{ 
@@ -49,6 +54,18 @@ Template.chat.helpers({
         username = user.username;
         username = username.charAt(0).toUpperCase() + username.slice(1);
         return username;
+      }
+    }
+  },
+  checkAdmin(userId){
+    if(userId){
+      const user = Meteor.users.findOne(userId);
+      if(user){
+        username = user.username;
+        if(username == 'admin'){
+          console.log("admin");
+          return true;
+        }
       }
     }
   },
@@ -80,6 +97,11 @@ Template.picking.helpers({
       console.log("Initialiser called");
       x[0].value = "excited";
     });
+  },
+  checkAdmin(username){
+    if(username == 'admin'){
+        return true;
+    }
   },
   test(){
     console.log(this);

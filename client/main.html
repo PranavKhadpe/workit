@@ -70,16 +70,29 @@
         </div>
         {{scroll}}
       {{else}}
-        <div class="d-flex flex-row bd-highlight mb-3">
-          <div class="theirmessage">
-              <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
-                <p style="margin:0;"><strong>{{getUsername userId}}</strong></p>
-                <p style="margin:0;"><span style="font-size:0.5rem;">{{formatDate createdAt}}</span></p>
-              </div>
-              <p style="margin:0;">{{text}}</p>
+        {{#if checkAdmin userId}}
+          <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+            <div class="adminmessage d-flex justify-content-center" style="width:100%">
+                <!-- <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                  <p style="margin:0;"><strong>{{getUsername userId}}</strong></p>
+                  <p style="margin:0;"><span style="font-size:0.5rem;">{{formatDate createdAt}}</span></p>
+                </div> -->
+                <p style="margin:0;"><i>{{text}}</i></p>
+            </div>
           </div>
-        </div>
-        {{scroll}}
+          {{scroll}}
+        {{else}}
+          <div class="d-flex flex-row bd-highlight mb-3">
+            <div class="theirmessage">
+                <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                  <p style="margin:0;"><strong>{{getUsername userId}}</strong></p>
+                  <p style="margin:0;"><span style="font-size:0.5rem;">{{formatDate createdAt}}</span></p>
+                </div>
+                <p style="margin:0;">{{text}}</p>
+            </div>
+          </div>
+          {{scroll}}
+        {{/if}}
       {{/if}}
     {{else}}
       <p>No messages</p>
@@ -104,7 +117,10 @@
     {{/if}}
     <hr>
     {{#each users}}
-      <p>{{username}}</p>
+      {{#if checkAdmin username}}
+      {{else}}
+        <p>{{username}}</p>
+      {{/if}}
     {{else}}
       <p>No users yet</p>
     {{/each}}
@@ -128,7 +144,10 @@
               <select class="form-control form-control-small btn-mini" id="exampleFormControlSelect1" name="username" style="font-size: 0.8rem; height: 30px; width:94.5%;border-bottom-left-radius: 0; border-top-left-radius:0; border:0;">
               
                 {{#each users}}
-                  <option>{{username}}</option>
+                  {{#if checkAdmin username}}
+                  {{else}}
+                    <option>{{username}}</option>
+                  {{/if}}
                 {{else}}
                   <option>No Users</option>
                 {{/each}}
