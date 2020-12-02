@@ -69,6 +69,11 @@ Template.chat.helpers({
       }
     }
   },
+  showcommand(text){
+    if(text == '/showgifs'){
+      return true;
+    }
+  },
   formatDate(date){
     return date.toLocaleString([], {timeStyle: 'short'});
   },
@@ -81,6 +86,9 @@ Template.chat.helpers({
         return false;
       }
     }
+  },
+  groupgif(){
+    return Gifs.find({assignedTo: 'admin'}, {sort: {createdAt: -1}, limit: 3, reactive: false});
   }
 });
 
@@ -115,8 +123,8 @@ Template.picking.helpers({
       button.addEventListener("click", function(){ 
         console.log("hidesend");
         var x = document.getElementById("gifsend");
-        x.innerHTML = "Sent!";
-        setTimeout(function(){ x.style.display = "none";}, 1000);
+        x.style.display="none";
+        // setTimeout(function(){ x.style.display = "none";}, 1000);
       });
     });
   },
@@ -148,8 +156,16 @@ Template.displaying.helpers({
       }
     }
   },
-  getgif(){
+  // getgif(){
 
+  // }
+});
+
+Template.admincontrols.helpers({
+  isadmin(username){
+    if(username == 'admin'){
+      return true;
+    }
   }
 });
 
@@ -183,16 +199,26 @@ Template.picking.events({
     })
     var x = document.getElementById("gifsend");
     x.innerHTML = "Sent!";
-    setTimeout(function(){ x.style.display = "none";}, 1000);
+    setTimeout(function(){ 
+      x.style.display = "none"; 
+      x.innerHTML="Send";
+      parent = document.querySelector(".gifpicker__chosengif");
+      button = parent.children[1];
+      button.click();
+    }, 1000);
     // x.style.display = "none";
-    parent = document.querySelector(".gifpicker__chosengif");
-    button = parent.children[1];
-    button.click();
   },
 });
 
 Template.displaying.events({
   'click #right-button'(event, instance){
     event.preventDefault();
+  }
+});
+
+Template.admincontrols.events({
+  'click #groupgifcollection'(event, instance){
+    var x = document.getElementById("groupgif");
+    x.style.display = "inline";
   }
 });

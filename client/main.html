@@ -29,6 +29,9 @@
                 {{> chat}}
               </div>
         </div>
+        <div class="row">
+          {{> admincontrols}}
+        </div>
       </div>
       <!-- <div id="left-panel" class="col-md-2">
         {{> participantlist}}
@@ -71,16 +74,36 @@
         {{scroll}}
       {{else}}
         {{#if checkAdmin userId}}
-          <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
-            <div class="adminmessage d-flex justify-content-center" style="width:100%">
-                <!-- <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
-                  <p style="margin:0;"><strong>{{getUsername userId}}</strong></p>
-                  <p style="margin:0;"><span style="font-size:0.5rem;">{{formatDate createdAt}}</span></p>
-                </div> -->
-                <p style="margin:0;"><i>{{text}}</i></p>
+          {{#if showcommand text}}
+            <div class="row" id="groupgif" style="width:95%; margin-left:15px;">
+              {{#each groupgif}}
+                <div class="col-md-4" style="padding: 0; margin-bottom:10px;">
+                  <div class="card" style="height:14rem;">
+                    <img src={{link}} class="card-img-top" style="margin-top: 0px; width: 100%; height:10rem; object-fit: scale-down; background: black;" alt="...">
+                    <div class="card-body" style="padding: 0.8rem;">
+                      <p class="card-title">{{getUsername assignedBy}}</p>
+                      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-info btn-sm"><i class="fas fa-arrow-alt-circle-up"></i> Upvote</a>
+                      <a href="#" class="btn btn-dark btn-sm">Downvote</a> -->
+                    </div>
+                  </div>
+                </div>
+                {{scroll}}
+              {{else}}
+              {{/each}}
             </div>
-          </div>
-          {{scroll}}
+          {{else}}
+            <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+              <div class="adminmessage d-flex justify-content-center" style="width:100%">
+                  <!-- <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                    <p style="margin:0;"><strong>{{getUsername userId}}</strong></p>
+                    <p style="margin:0;"><span style="font-size:0.5rem;">{{formatDate createdAt}}</span></p>
+                  </div> -->
+                  <p style="margin:0;"><i>{{text}}</i></p>
+              </div>
+            </div>
+            {{scroll}}
+          {{/if}}
         {{else}}
           <div class="d-flex flex-row bd-highlight mb-3">
             <div class="theirmessage">
@@ -144,10 +167,10 @@
               <select class="form-control form-control-small btn-mini" id="exampleFormControlSelect1" name="username" style="font-size: 0.8rem; height: 30px; width:94.5%;border-bottom-left-radius: 0; border-top-left-radius:0; border:0;">
               
                 {{#each users}}
-                  {{#if checkAdmin username}}
-                  {{else}}
+                  <!-- {{#if checkAdmin username}}
+                  {{else}} -->
                     <option>{{username}}</option>
-                  {{/if}}
+                  <!-- {{/if}} -->
                 {{else}}
                   <option>No Users</option>
                 {{/each}}
@@ -258,4 +281,11 @@
                     </div>
           </div>
       </div>
+</template>
+
+<template name="admincontrols">
+  {{#if isadmin currentUser.username}}
+    <button type="button" class="btn btn-dark" id="groupgifcollection">Send group GIFs</button>
+  {{else}}
+  {{/if}}
 </template>
